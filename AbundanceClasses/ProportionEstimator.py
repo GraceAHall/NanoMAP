@@ -32,11 +32,13 @@ class ProportionEstimator:
 
 
     def perform_alignment_based_estimation(self):
-        print('Estimating relative proportions...')
+        print('\nperforming composition estimation')
         self.perform_setup()
         self.create_database()
         self.load_genomes()
         self.create_fragments()
+
+        print('\nestimating transition probabilities')
         self.align_sample_reads()
         self.align_simulated_reads()
 
@@ -52,6 +54,7 @@ class ProportionEstimator:
 
         empirical_organism_summary = load_json(path + 'empirical_organism_summary.json')
         observed_counts = load_json(path + 'observed_counts.json')
+        print('\nEM rounds start')
         self.estimate_proportions(empirical_organism_summary, observed_counts)
         self.update_sample_proportions()
 
@@ -70,7 +73,7 @@ class ProportionEstimator:
         
 
     def create_database(self):
-        print('preparing reference database')
+        print('\npreparing reference database')
         ct = self.context
         
         if os.path.exists(self.database_file):

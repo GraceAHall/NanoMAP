@@ -11,14 +11,13 @@ class FastqMaker:
 
 
     def make(self):
+        print('binning reads from input fasta')
         self.set_file_mode()
         self.make_read_id_dict()
 
         if self.mode == 'fasta':
-            print('binning reads from input fasta')
             self.set_reads_by_group_fasta()
         else:
-            print('binning reads from input fastq')
             self.set_reads_by_group_fastq()
 
         self.write_new_fastqs()
@@ -42,7 +41,6 @@ class FastqMaker:
                     banlist.add(read_id)
                 if read_id not in banlist:
                     read_id_dict[read_id] = group.id
-        print(f'{len(banlist)} multigroup reads removed')
         self.read_id_dict = read_id_dict
 
 

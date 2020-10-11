@@ -3,8 +3,7 @@ import json
 from collections import defaultdict
 import numpy as np
 from copy import deepcopy
-#import matplotlib.pyplot as plt
-#from matplotlib.pyplot import figure
+
 
 
 
@@ -15,7 +14,6 @@ class TerryEM:
         self.create_objects()
 
 
-    ### initialisation ###
     def create_objects(self):
         self.set_total_count()
         self.initialise_sample_proportions()
@@ -65,10 +63,6 @@ class TerryEM:
                 self.count_matrix[row][col] = 0
 
 
-
-
-
-    ### main algorithm ###
     def iterate(self):
         self.iteration = 0
         self.update_predictions()
@@ -159,12 +153,6 @@ class TerryEM:
             self.sample_proportions[s] = total
 
     
-
-
-
-
-
-    ### printing/plotting ###
     def print_matrix(self, table='norm_transition'):  
         if table == 'norm_transition':
             matrix = self.norm_transition_matrix
@@ -220,20 +208,3 @@ class TerryEM:
         for symbol, count in self.sample_proportions.items():
             print('{:^15}{:^15.2f}'.format(symbol, count))
 
-
-    def plot_ll(self):
-        iterations = [x[0] for x in self.likelihoods]
-        likelihoods = [x[1] for x in self.likelihoods]
-        figure(figsize=(16, 9), dpi=80)
-        plt.plot(iterations, likelihoods)
-        plt.ylabel('log likelihood')
-        plt.xlabel('iteration')
-        plt.ylim(137900, 138020)
-        plt.title('Log Likelihood over iterations')
-        plt.show()
-
-
-    @staticmethod
-    def load_json(filename):
-        with open(filename, 'r') as fp:
-            return json.load(fp)

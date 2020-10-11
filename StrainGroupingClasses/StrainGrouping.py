@@ -22,6 +22,7 @@ class StrainGrouper:
 
 
     def group(self):
+        print('organising strains into groups')
         self.process_paf()
         self.calculate_strain_similarity()
         self.group_strains()
@@ -63,7 +64,7 @@ class StrainGrouper:
     def prune_groups(self):
         gp = GroupPruner(self.strain_groups)
         self.strain_groups = gp.prune()
-        self.print_groups()
+        #self.print_groups()
         
 
     def write_group_characterisation(self):

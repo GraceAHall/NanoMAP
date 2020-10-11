@@ -37,7 +37,8 @@ class PafClassifier:
 
 
     def jsonify_observed_counts(self):
-        write_json(self.pooled_summary_dict, 'observed_pooled.json')
+        path = self.context.project_path + '/runtimefiles/abundance_estimation/'
+        write_json(self.pooled_summary_dict, path + 'observed_pooled.json')
 
 
     def group_alignments_by_read(self):

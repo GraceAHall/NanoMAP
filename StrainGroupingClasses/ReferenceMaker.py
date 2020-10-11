@@ -13,7 +13,7 @@ class ReferenceMaker:
 
 
     def make(self):
-        print('creating candidate strain group reference databases')
+        print('creating strain group reference metagenomes')
         for group in self.strain_groups:
             relevant_filenames = self.get_relevant_genome_files(group)
             self.write_database(relevant_filenames, group.id)

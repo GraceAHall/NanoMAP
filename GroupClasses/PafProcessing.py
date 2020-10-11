@@ -62,8 +62,8 @@ class PafProcessor:
         self.min_collinearity = avg_collinearity - 1 * std_dev_collinearity
         self.min_pid = avg_pid - 1 * std_dev_pid
 
-        print('min collinearity', self.min_collinearity)
-        print('min pid', self.min_pid)
+        #print('min collinearity', self.min_collinearity)
+        #print('min pid', self.min_pid)
         del lines
         return alignments
 

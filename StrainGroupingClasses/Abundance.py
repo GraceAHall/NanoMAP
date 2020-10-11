@@ -13,7 +13,7 @@ class GroupAbundanceCalculator:
         self.set_group_base_counts()
         self.set_strain_base_counts()
         self.set_group_abundances()
-        self.print_group_abundances()
+        #self.print_group_abundances()
         return self.strain_groups
 
 
