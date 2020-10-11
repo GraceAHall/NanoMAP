@@ -46,8 +46,8 @@ class PafProcessor:
                 alignments.append([read_id, target, collinearity, pid, block, read_length, base_matches])
                 line = fp.readline().split('\t')
 
-        print('collinearity', sum([al[2] for al in alignments]) / len(alignments))
-        print('pid', sum([al[3] for al in alignments]) / len(alignments))
+        #print('collinearity', sum([al[2] for al in alignments]) / len(alignments))
+        #print('pid', sum([al[3] for al in alignments]) / len(alignments))
         return alignments        
 
 
@@ -57,7 +57,7 @@ class PafProcessor:
         start_len = len(alignments)
         alignments = [al for al in alignments if al[5] > min_read_length]
         end_len = len(alignments)
-        print(f'removed {start_len - end_len} alignments due to read length')
+        #print(f'removed {start_len - end_len} alignments due to read length')
         return alignments
 
 
@@ -66,7 +66,7 @@ class PafProcessor:
         start_len = len(alignments)
         alignments = [al for al in alignments if al[3] > min_pid]
         end_len = len(alignments)
-        print(f'removed {start_len - end_len} alignments due to low pid')
+        #print(f'removed {start_len - end_len} alignments due to low pid')
         return alignments
             
 
@@ -75,7 +75,7 @@ class PafProcessor:
         start_len = len(alignments)
         alignments = [al for al in alignments if al[2] > min_collinearity]
         end_len = len(alignments)
-        print(f'removed {start_len - end_len} alignments due to low collinearity')
+        #print(f'removed {start_len - end_len} alignments due to low collinearity')
         return alignments 
 
     

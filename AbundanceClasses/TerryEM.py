@@ -76,8 +76,10 @@ class TerryEM:
         #self.print_matrix(table='counts')
         self.update_parameters()
 
-        while self.ll_delta > 0.000001:
+        while self.ll_delta > 0.1:
             self.iteration += 1
+            print(f'\niteration {self.iteration}')
+            print(f'log likelihood: {round(self.current_ll, 2)}')
             self.update_predictions()
             #self.print_matrix(table='counts')
             self.update_parameters()
