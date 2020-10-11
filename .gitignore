@@ -1,0 +1,4 @@
+databases/
+projects/
+__pycache__/
+*.py[cod]
