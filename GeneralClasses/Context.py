@@ -9,14 +9,15 @@ class ProgramContext:
         self.database_path = None
         self.fastq_path = None 
         self.project_path = 'project'
+        self.project_name = ''
 
         self.threads = '6'
+        self.max_memory = '128'
         self.create_database = False
         self.update_taxonomy = False
         self.dump_index = True
         self.read_technology = 'map-ont'
         self.include_plasmids_mitochondria = False
-
 
         self.update_params(opts)
         self.check_params_ok()
@@ -37,15 +38,14 @@ class ProgramContext:
                 if not self.database_path.endswith('/'):
                     self.database_path = self.database_path + '/'
             elif opt == '-p':
+                self.project_name = arg
                 self.project_path = 'projects/' + arg
+            elif opt == '-m':
+                self.max_memory = int(arg) // 4 * 3
             elif opt == '--map-pb':
                 self.read_technology = 'map-pb'
             elif opt == '--allow-extrachromosomal':
                 self.include_plasmids_mitochondria = True
-            elif opt == '--run-test':
-                self.project_path = 'projects/test'
-                self.fastq_path = 'test_reads/nanopore_very_small.fq'
-                self.database_path = 'test_database/'
                 
 
     def print_help(self):
@@ -59,9 +59,9 @@ class ProgramContext:
 
 
     def print_params(self):
+        print('\nNanoMAP parameters:')
         for key, val in vars(self).items():
             print(key, ":", val)
-
 
 
 class StrainGroupingContext:
@@ -109,6 +109,7 @@ class DatabaseBuildingContext:
                 self.rebuild = True
             elif opt == '--map-pb':
                 self.read_technology_preset = 'map-pb'
+            
 
 
 

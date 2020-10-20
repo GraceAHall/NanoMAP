@@ -52,7 +52,18 @@ class FileSetup:
 
 
     def noalign_setup(self):
+        #FileNotFoundError: [Errno 2] No such file or directory: 'projects/lmono_0367/runtimefiles/pafs/full_alignment.paf'
         pp = self.context.project_path
+
+        if not os.path.exists(pp + '/runtimefiles/pafs/full_alignment.paf'):
+            print('initial alignment file not found. consider removing the "--no-initial-alignment" argument')
+            sys.exit()
+
+        detailed_report_path = self.context.project_name + '_detailed_report.tsv'
+        brief_report_path = self.context.project_name + '_brief_report.tsv'
+        
+        subprocess.call(f'rm {detailed_report_path}', shell=True)
+        subprocess.call(f'rm {brief_report_path}', shell=True)
         subprocess.call(f'rm {pp}/runtimefiles/group_databases/*', shell=True)
         subprocess.call(f'rm {pp}/runtimefiles/group_fastqs/*', shell=True)
         # more here please

@@ -27,6 +27,7 @@ class GroupAnalyser:
 
 
     def analyse_group(self):
+        print('\nnarrowing strain candidates:\n')
         self.perform_alignment(initial=True)
         self.process_paf()
         self.create_characterisation()
@@ -42,14 +43,14 @@ class GroupAnalyser:
             self.print_characterisation()
             self.judge_completion()
 
+        self.write_to_detailed_report()
         self.pick_strains()
-        #self.estimate_abundances()
-        #self.report_characterisation()
-        print('\n\nidentified strains:')
-        for strain in self.identified_strains:
-            print(strain.name)
-        print('\n')
+        self.print_identified_strains()
+        self.estimate_abundances()
+        print(f'group {self.group.id} narrowing done.')
+
         return self.identified_strains
+
 
 
     def perform_alignment(self, initial=False):
@@ -57,8 +58,8 @@ class GroupAnalyser:
         database = self.complete_database if initial else self.narrow_database
 
         with open(self.paf, 'w') as outfile:
-            subprocess.run(['minimap2', '-c', '-p', '0.1', '-N', '10', '-x', ct.read_technology, '-t', ct.threads, '-K', '100M', '-I', '1000G', database, self.fastq], stdout=outfile)
-
+            subprocess.run(['minimap2', '-c', '-p', '0.1', '--no-long-join', '-N', '10', '-x', ct.read_technology, '-I', str(ct.max_memory) + 'G', '-t', ct.threads, '-I', '1000G', database, self.fastq], stdout=outfile)
+        
 
     def process_paf(self):
         pp = PafProcessor(self.paf, self.context.database_path, self.include_plasmids_mitochondria)
@@ -93,15 +94,29 @@ class GroupAnalyser:
             subprocess.call(f'cat {f} >> {self.narrow_database}', shell=True)
 
 
+    def write_to_detailed_report(self):
+        output_filepath = self.context.project_name + '_detailed_report.tsv'
+        self.characterisation.sort(key=lambda x: x.mapq_dict[60], reverse=True)
+        for strain in self.characterisation:
+            with open(output_filepath, 'a') as fp:
+                fp.write(f'{strain.name}\t{strain.filename}\t{self.group.id}\t{round(strain.naive_abundance, 2)}\t{strain.mapq_dict[60]}\t{strain.mapq_dict[10]}\t{strain.mapq_dict[2]}\n')
+
+
     def pick_strains(self):
         sp = StrainPicker(self.characterisation)
         self.identified_strains = sp.pick()
 
 
     def estimate_abundances(self):
-        pe = ProportionEstimator(self.characterisation, self.context)
-        self.identified_strains_abundances = pe.estimate()
+        pe = ProportionEstimator(self.identified_strains, self.group.abundance, self.context)
+        self.identified_strains = pe.estimate()
 
+
+    def print_identified_strains(self):
+        print('\nidentified strains:')
+        for strain in self.identified_strains:
+            print(strain.name)
+       
 
     def print_characterisation(self):
         self.characterisation.sort(key=lambda x: x.naive_abundance, reverse=True)

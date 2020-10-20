@@ -23,11 +23,22 @@ class StrainPicker:
         if tophit >= 10 * secondhit:
             characterisation = [characterisation[0]]
 
-        else:
+        # checking the top strain by mapq_60 actually has a single count
+        if characterisation[0].mapq_dict[60] > 0:
             characterisation = [strain for strain in characterisation if strain.mapq_dict[60] > 0]
             characterisation.sort(key=lambda x: x.mapq_dict[10], reverse=True)
             characterisation = characterisation[:5]
 
+        elif characterisation[0].mapq_dict[10] > 0:
+            characterisation = [strain for strain in characterisation if strain.mapq_dict[10] > 0]
+            characterisation.sort(key=lambda x: x.mapq_dict[10], reverse=True)
+            characterisation = characterisation[:5]
+
+        elif characterisation[0].mapq_dict[2] > 0:
+            characterisation = [strain for strain in characterisation if strain.mapq_dict[2] > 0]
+            characterisation.sort(key=lambda x: x.mapq_dict[2], reverse=True)
+            characterisation = characterisation[:5]
+            
         return characterisation
 
 

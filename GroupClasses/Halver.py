@@ -14,7 +14,9 @@ class Halver:
         # top 75 % mapq1 
         # top 66 % collinearity
         characterisation = self.characterisation
-        print(self.min_abundance)
+
+        #print(self.min_abundance)
+
         strain_quota = math.ceil(0.5 * len(characterisation))
         remaining_strains = math.ceil(0.5 * len(characterisation))
         characterisation = [strain for strain in characterisation if strain.naive_abundance > self.min_abundance]
@@ -25,7 +27,7 @@ class Halver:
         # iteratively place strains in new_characterisation
         new_characterisation = []
         
-        print(f'selecting {strain_quota} strains in total')
+        print(f'\nselecting {strain_quota} strains\n')
         # put top things 
         characterisation.sort(key=lambda x: x.mapq_dict[60], reverse=True)
         for i in range(min(2, remaining_strains)):
@@ -43,10 +45,6 @@ class Halver:
         if len(new_characterisation) >= strain_quota:
             return new_characterisation
 
-        print(f'selected: {[x.name for x in new_characterisation]}')
-        print(f'{remaining_strains} more to add')
-
-
         characterisation.sort(key=lambda x: x.mapq_dict[10], reverse=True)
         for i in range(min(2, remaining_strains)):
             strains_to_delete = []
@@ -60,13 +58,9 @@ class Halver:
         
         if len(new_characterisation) >= strain_quota:
             return new_characterisation
-        
-        print(f'selected: {[x.name for x in new_characterisation]}')
-        print(f'{remaining_strains} more to add')
 
         characterisation.sort(key=lambda x: x.mapq_dict[2], reverse=True)
         new_characterisation += characterisation[:remaining_strains]
 
-        print(f'final strains making the cut: {[x.name for x in new_characterisation]} more to add')
         return new_characterisation
     

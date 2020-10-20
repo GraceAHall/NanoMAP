@@ -30,7 +30,7 @@ class SubsetAligner:
     def align(self):
         outputfile = 'runtimefiles/genome_subset.paf'
         with open(outputfile, 'w') as outfile:
-            subprocess.run(['minimap2', '-c', '-x', 'map-pb', '-t', self.context.threads, 'runtimefiles/genome_subset.fasta', self.group_reads], stdout=outfile)
+            subprocess.run(['minimap2', '-c', '-x', 'map-pb', '-I', str(self.context.max_memory) + 'G', '-t', self.context.threads, 'runtimefiles/genome_subset.fasta', self.group_reads], stdout=outfile)
 
 #
     def characterise(self):

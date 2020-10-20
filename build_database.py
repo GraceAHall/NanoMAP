@@ -11,7 +11,7 @@ from DatabaseClasses.TaxonomyBuilder import TaxonomyBuilder
 
 # takes the folder to process as positional arg 
 def main(argv): 
-    opts, args = getopt.getopt(argv, "hd:t:p:", ["taxonomy-only", "index-only", "rebuild"])
+    opts, args = getopt.getopt(argv, "hd:t:p:", ["taxonomy-only", "database-only", "rebuild"])
     context = DatabaseBuildingContext(opts)
 
     check_existing_build(context)
@@ -20,7 +20,7 @@ def main(argv):
         if opt == '--taxonomy-only':
             build_taxonomy(context)
             sys.exit()
-        elif opt == '--index-only':
+        elif opt == '--database-only':
             build_minimap2_index(context)
             sys.exit()
         

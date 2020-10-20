@@ -15,8 +15,9 @@ import math
 
 
 class ProportionEstimator:
-    def __init__(self, characterisation, context):
+    def __init__(self, characterisation, group_abundance, context):
         self.present_strains = characterisation
+        self.group_abundance = group_abundance
         self.context = context
         self.include_accessory_dna = False
         self.read_bases_mb = 10 * 1000000  # 20mb worth of reads per genome
@@ -32,13 +33,14 @@ class ProportionEstimator:
 
 
     def perform_alignment_based_estimation(self):
-        print('\nperforming composition estimation')
+        print('\nmultiple identified strains in group')
+        print('performing composition estimation')
         self.perform_setup()
         self.create_database()
         self.load_genomes()
         self.create_fragments()
 
-        print('\nestimating transition probabilities')
+        #print('estimating transition probabilities')
         self.align_sample_reads()
         self.align_simulated_reads()
 
@@ -54,7 +56,9 @@ class ProportionEstimator:
 
         empirical_organism_summary = load_json(path + 'empirical_organism_summary.json')
         observed_counts = load_json(path + 'observed_counts.json')
-        print('\nEM rounds start')
+
+        print('EM rounds start')
+
         self.estimate_proportions(empirical_organism_summary, observed_counts)
         self.update_sample_proportions()
 
@@ -125,7 +129,7 @@ class ProportionEstimator:
 
         with open(self.sample_paf_file, 'w') as outfile:
             print('running minimap2 on database')
-            subprocess.run(['minimap2', '-c', '-x', ct.read_technology, '-t', ct.threads, '-K', '50M', self.database_file, self.sample_reads], stdout=outfile)
+            subprocess.run(['minimap2', '-c', '-x', ct.read_technology, '-t', ct.threads, '-K', '50M', '-I', str(ct.max_memory) + 'G', self.database_file, self.sample_reads], stdout=outfile)
 
 
     def align_simulated_reads(self):
@@ -133,7 +137,7 @@ class ProportionEstimator:
 
         with open(self.fragment_paf_file, 'w') as outfile:
             print('running minimap2 on database')
-            subprocess.run(['minimap2', '-c', '-x', ct.read_technology, '-t', ct.threads, '-K', '50M', self.database_file, self.fragment_reads], stdout=outfile)
+            subprocess.run(['minimap2', '-c', '-x', ct.read_technology, '-t', ct.threads, '-K', '50M', '-I', str(ct.max_memory) + 'G', self.database_file, self.fragment_reads], stdout=outfile)
 
 
     def create_symbols(self):
@@ -183,13 +187,13 @@ class ProportionEstimator:
                 if terry_symbol == mapping_symbol:
                     for strain in self.present_strains:
                         if filename == strain.filename:
-                            strain.sample_abundance = proportion * 100
+                            strain.sample_abundance = proportion * self.group_abundance
                             #print('{:>50}{:>15.2f}'.format(strain.name[:50], strain.sample_abundance))
 
 
     def set_simple_abundance(self):
-        print('Single strain detected in group. Setting sample abundance')
-        self.present_strains[0].sample_abundance = self.present_strains[0].group_abundance
+        print('\nSingle strain detected in group. Setting sample abundance')
+        self.present_strains[0].sample_abundance = self.group_abundance
         print()
 
 

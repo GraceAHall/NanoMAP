@@ -22,16 +22,16 @@ class StrainGrouper:
 
 
     def group(self):
-        print('organising strains into groups')
+        print('calculating classification co-occurence')
         self.process_paf()
         self.calculate_strain_similarity()
         self.group_strains()
         self.calculate_group_abundances()
         self.bin_reads()
         self.prune_groups()
-        #self.write_group_characterisation()
         self.create_reference_databases()
         self.create_fastqs()
+        self.report_groups()
         return self.strain_groups
         
 
@@ -43,7 +43,6 @@ class StrainGrouper:
     def calculate_strain_similarity(self):
         sc = SimilarityCalculator(self.read_classifications)
         self.read_counts, self.co_occurance = sc.pairwise_occurance()
-        print('done')
 
 
     def group_strains(self):
@@ -65,13 +64,13 @@ class StrainGrouper:
         gp = GroupPruner(self.strain_groups)
         self.strain_groups = gp.prune()
         #self.print_groups()
-        
 
-    def write_group_characterisation(self):
-        filename = self.context.project_path + '/runtimefiles/characterisations/group_level_characterisation.tsv'
-        with open(filename, 'w') as fp:
-            for group in self.strain_groups:
-                fp.write(f'{group.id}\t{group.abundance}\n')
+    
+    def report_groups(self):
+        sg = self.strain_groups
+        print('\n{:<12}{:>22}'.format('strain group', 'sample proportion'))
+        for group in self.strain_groups:
+            print('{:>12}{:>21.2f}%'.format(group.id, group.abundance))
 
 
     def create_reference_databases(self):
@@ -84,6 +83,7 @@ class StrainGrouper:
         fm.make()
 
 
+    '''
     def print_groups(self):
         fa_dict = load_json(f'{self.context.database_path}taxonomy/filenames_accessions.json')
         ag_dict = load_json(f'{self.context.database_path}taxonomy/accessions_genomes.json')
@@ -93,5 +93,6 @@ class StrainGrouper:
                 accession = fa_dict[identifier]
                 genome = ag_dict[accession.upper()]
                 print(genome)
+    '''
 
 

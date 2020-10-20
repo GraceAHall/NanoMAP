@@ -68,15 +68,13 @@ class PafClassifier:
     @staticmethod
     def get_good_blocks(alignments):
         read_length = alignments[0][1]
-        max_block = 1.2 * read_length + 50   # - constant for adaptor size?
-        min_block = 0.8 * read_length - 50   # + constant for adaptor size?
+        max_block = 1.1 * read_length + 50   # - constant for adaptor size?
+        min_block = 0.9 * read_length - 50   # + constant for adaptor size?
         return [x for x in alignments if x[3] > min_block and x[3] < max_block]
 
 
     @staticmethod
     def filter_low_pid(alignments):
-        if len(alignments) == 0:
-            return []
         min_identity = 0.85
         return [al for al in alignments if al[2] / al[3] > min_identity]
 
@@ -224,44 +222,5 @@ class PafClassifier:
             for organism, symbol_counts in self.organisms_summary_dict.items():
                 for symbol, count in symbol_counts.items():
                     print(f'origin: {organism} classification: {symbol} count: {count}')
-
-'''
-
-    def convert_accessions_to_symbols(self):
-        symbols_classifications = defaultdict(list)
-        classifications = self.classifications
-        symbol_mappings = self.symbol_mappings
-
-        while len(organisms_classifications) > 0:
-            organism, old_classification_list = organisms_classifications.popitem()
-            symbol = symbol_mappings[organism]
-            new_classification_list = []
-            for classification in old_classification_list:
-                new_classification = [symbol_mappings[c] for c in classification]
-                new_classification_list.append(new_classification)
-            symbols_classifications[symbol] = new_classification_list
-
-        self.organisms_classifications = symbols_classifications
-
-
-    def create_classification_summary(self):
-        the_dict = self.initialise_dictionary()
-        self.create_pooled_summary()
-
-
-
-        
-
-    def create_pooled_summary(self):
-        pooled_summary = {}
-        for item in self.combinations:
-            pooled_summary[item] = 0
-        for organism, summary in self.organisms_summary_dict.items():
-            for classification, count in summary.items():
-                pooled_summary[classification] += count
-        self.pooled_summary_dict = pooled_summary
-
-'''
-
 
 
