@@ -33,6 +33,8 @@ python nanomap.py -r fastq/fasta -d database -p projectname
 <br>
 
 ## <a name="requirements"></a>Requirements
+NanoMAP uses read alignment for sample characterisation. <br>
+Python pulls the strings, while minimap2 does most of the actual work. The following are required. 
 - minimap2
 - python 3.6 or greater
 - python packages:
@@ -55,8 +57,7 @@ Due to its method, **redundant copies** of a reference genome in the database wi
 Redundant genomes can be easily removed **by the user** if encountered during runtime. See [Removing Redundancies](#redundancies) <br>
 **Poor-quality reference genomes** will similarly degrade performance.  
 
-You can read more in the NanoMAP paper:<br>
-[paper link here]
+You can read more in the [NanoMAP paper](https://www.biorxiv.org/content/10.1101/2020.10.18.344739v1)<br>
 
 
 
