@@ -20,6 +20,12 @@ class FileSetup:
 
     def check_if_project_exists(self):
         pp = self.context.project_path
+        shutil.rmtree(pp, ignore_errors=True)
+
+
+    '''
+    def check_if_project_exists(self):
+        pp = self.context.project_path
         if os.path.exists(pp):
             project_name = pp.lstrip('projects/')
             confirmation = input(f'the project {project_name} already exists - would you like to wipe it and continue? [y/n]')
@@ -28,6 +34,7 @@ class FileSetup:
             else:
                 print('exiting')
                 sys.exit()
+    '''
 
 
     def make_project_folder(self): 
