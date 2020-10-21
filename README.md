@@ -170,7 +170,7 @@ NanoMAP provides two output files:
 * A brief report
 * A detailed report
 
-These appear as: **projectname_brief.tsv**, and **projectname_detailed.tsv**
+These appear as: **projectname_brief_report.tsv**, and **projectname_detailed_report.tsv**
 
 <br>
 
@@ -178,29 +178,34 @@ These appear as: **projectname_brief.tsv**, and **projectname_detailed.tsv**
 
 The brief report is the intended output of NanoMAP. <br>
 It is a tab delimited file containing the following information for identified strains:
-* strain name | filename | sample DNA abundance
+* Strain name
+* Filename
+* Sample DNA abundance
 
 <br>
 
 **Detailed report**
 
 NanoMAP is still under development. <br>
-Incorrect results may sometimes occur, due to low quality reads, low quality reference genomes, and database redundancies. <br>It is a good idea to inspect **projectname_detailed.tsv**, or the runtime console output to catch possible errors. 
+Incorrect results may sometimes occur, due to low quality reads, low quality reference genomes, and database redundancies. <br>It is a good idea to inspect the detailed report, or the runtime console output, to catch possible errors. 
 
 During runtime, NanoMAP creates a shortlist of candidate strains (strain group) for each true sample strain. <br>
 From this shortlist, the true sample strain is identified. <br>
 
 The detailed report captures a snapshot of the information NanoMAP used when identifying strains. <br>
 For each shortlist, the following information is recorded:
-* Naive sample DNA abundance
+* Strain name
+* Filename
+* Strain group
+* Naive abundance within group
 * MAPQ=60 read count
 * MAPQ=10 read count
-* MAPQ=3 read count
+* MAPQ=2 read count
 
-Naive sample DNA abundance is a very rough estimate of abundance. 
+Naive abundance is a very rough estimate of abundance within a strain group. 
 
 The MAPQ read counts record the number of reads which map uniquely to that strain's reference genome.<br> MAPQ scores are the basis for identifying strains, and will have informed NanoMAP's decisions.  <br>
-In our experience, a human can often interpret the console information and **projectname_detailed.tsv** better than NanoMAP.  
+In our experience, a human can often interpret the console information and **projectname_detailed_report.tsv** better than NanoMAP.  
 
 
 
