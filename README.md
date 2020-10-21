@@ -72,7 +72,7 @@ python nanomap.py -r fastq/fasta -d database -p projectname
 # multithreading 
 python nanomap.py -r fastq -d database -p projectname -t 10    
 
-# limit memory usage
+# limit memory usage (in Gigabytes)
 python nanomap.py -r fastq -d database -p projectname -m 16 
 
 # specify read technology
