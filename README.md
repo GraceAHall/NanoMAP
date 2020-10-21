@@ -70,7 +70,10 @@ After a database has been built, NanoMAP can be run with the following:
 python nanomap.py -r fastq/fasta -d database -p projectname
 
 # multithreading 
-python nanomap.py -r fastq -d database -p projectname -t 10          
+python nanomap.py -r fastq -d database -p projectname -t 10    
+
+# limit memory usage
+python nanomap.py -r fastq -d database -p projectname -m 16 
 
 # specify read technology
 python nanomap.py -r fastq -d database -p projectname --map-ont / --map-pb        

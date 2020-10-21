@@ -7,6 +7,7 @@ import shutil
 import sys
 import subprocess
 
+
 class FileSetup:
     def __init__(self, context):
         self.context = context
