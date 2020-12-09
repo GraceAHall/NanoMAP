@@ -1,6 +1,6 @@
 
 
-
+ 
 from modules.io import load_json, write_reads_from_dict, write_group_genomes
 from GeneralClasses.Strain import Strain, Contig 
 

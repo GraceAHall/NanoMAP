@@ -1,5 +1,5 @@
 
-
+ 
 class Genome:
     def __init__(self, filename):
         self.kmersize = 15

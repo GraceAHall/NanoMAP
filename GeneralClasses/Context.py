@@ -91,6 +91,7 @@ class DatabaseBuildingContext:
         self.read_technology_preset = 'map-ont'
         self.threads = '3'
         self.rebuild = False
+        self.max_memory = '128'
         self.update_params(opts)
 
 
@@ -105,16 +106,24 @@ class DatabaseBuildingContext:
                     self.database_path = self.database_path + '/'
             elif opt == '-p':
                 self.read_technology_preset = arg
+            elif opt == '-m':
+                self.max_memory = int(arg) // 4 * 3
             elif opt == '--rebuild':
                 self.rebuild = True
-            elif opt == '--map-pb':
-                self.read_technology_preset = 'map-pb'
             
 
-
-
     def print_help(self):
-        print('no help yet')
+        print('HELP MESSAGE')
+        print('This program builds a NanoMAP database.')
+        print('A database must be build before characterising read sets.')
+        print('{:50}{:10}{:50}'.format('Argument description', 'flag', '[valid inputs]\n'))
+        print('Required arguments:')
+        print('{:50}{:10}{:50}'.format('A folder containing genome FASTAs:', '-d', '[folder path (can be relative)]\n'))
+        print('Optional arguments:')
+        print('{:50}{:10}{:50}'.format('Read technology preset:', '-p', '[either map-ont (ONT) or map-pb (PacBio)]'))
+        print('{:50}{:10}{:50}'.format('Max RAM usage (Gigabytes):', '-m', '[num gigabytes]\n'))
+        
+
 
 
 

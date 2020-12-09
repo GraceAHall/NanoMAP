@@ -11,7 +11,7 @@ from DatabaseClasses.TaxonomyBuilder import TaxonomyBuilder
 
 # takes the folder to process as positional arg 
 def main(argv): 
-    opts, args = getopt.getopt(argv, "hd:t:p:", ["taxonomy-only", "database-only", "rebuild"])
+    opts, args = getopt.getopt(argv, "hd:t:p:m:", ["taxonomy-only", "database-only", "rebuild"])
     context = DatabaseBuildingContext(opts)
 
     check_existing_build(context)

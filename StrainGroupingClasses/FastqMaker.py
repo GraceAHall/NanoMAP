@@ -1,7 +1,7 @@
 
 
 from collections import defaultdict
-
+ 
 
 class FastqMaker:
     def __init__(self, strain_groups, context):

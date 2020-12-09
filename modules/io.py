@@ -4,7 +4,7 @@ from AbundanceClasses.Genome import Genome
 import os
 from collections import defaultdict
 
-
+ 
 
 def load_json(filename):
     with open(filename, 'r') as fp:

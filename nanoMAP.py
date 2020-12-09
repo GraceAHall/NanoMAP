@@ -13,7 +13,7 @@ import getopt
 import subprocess
 import os
 
-
+ 
 
 def main(argv):
     opts, args = getopt.getopt(argv, "ht:r:d:p:m:", ["map-pb", "map-ont", "no-initial-alignment", "allow-extrachromosomal"])
