@@ -58,7 +58,7 @@ class IndexBuilder:
         if os.path.exists(ct.database_path + 'database.mmi'):
             os.remove(ct.database_path + 'database.mmi')
             
-        subprocess.call(f'minimap2 --idx-no-seq -x map-ont -I {str(ct.max_memory)}G, -t {ct.threads} -d {ct.database_path}database.mmi {ct.database_path}database.fastaaaa', shell=True)
+        subprocess.call(f'minimap2 --idx-no-seq -x {ct.read_technology_preset} -I {str(ct.max_memory)}G, -t {ct.threads} -d {ct.database_path}database.mmi {ct.database_path}database.fastaaaa', shell=True)
         print('index created.')
         
 

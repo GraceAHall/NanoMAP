@@ -11,10 +11,8 @@ class ProgramContext:
         self.project_path = 'project'
         self.project_name = ''
 
-        self.threads = '6'
+        self.threads = '4'
         self.max_memory = '128'
-        self.create_database = False
-        self.update_taxonomy = False
         self.dump_index = True
         self.read_technology = 'map-ont'
         self.include_plasmids_mitochondria = False
@@ -49,7 +47,23 @@ class ProgramContext:
                 
 
     def print_help(self):
-        print('\nno help for now\n')
+        print('HELP MESSAGE')
+        print('This program characterises a read set.')
+        print('A database must be build before this program is run (build_database.py).')
+        print('Paths can be relative or absolute.\n')
+        print('Format:')
+        print('{:50}{:10}{:50}'.format('Argument description', 'flag', '[valid inputs]'))
+        print('\nRequired arguments:')
+        print('{:50}{:10}{:50}'.format('NanoMAP database', '-d', '[folder path]'))
+        print('{:50}{:10}{:50}'.format('Read set', '-r', '[fastq path]'))
+        print('{:50}{:10}{:50}'.format('Project name for this run', '-p', '[name string]'))
+        print('\nOptional arguments:')
+        print('{:50}{:10}{:50}'.format('Number of threads (default 4)', '-t', '[num threads]'))
+        print('{:50}{:10}{:50}'.format('Max RAM usage (default 128)', '-m', '[num gigabytes]'))
+        print('{:50}{:10}{:70}'.format('PacBio read set (default ONT)', '--map-pb', '**ensure database was built using --map-pb'))
+        print()
+
+        print('For more information, see https://github.com/GraceAHall/NanoMAP')
     
 
     def check_params_ok(self):
@@ -104,8 +118,8 @@ class DatabaseBuildingContext:
                 self.database_path = arg
                 if not self.database_path.endswith('/'):
                     self.database_path = self.database_path + '/'
-            elif opt == '-p':
-                self.read_technology_preset = arg
+            elif opt == '--map-pb':
+                self.read_technology_preset = 'map-pb'
             elif opt == '-m':
                 self.max_memory = int(arg) // 4 * 3
             elif opt == '--rebuild':
@@ -120,10 +134,10 @@ class DatabaseBuildingContext:
         print('Required arguments:')
         print('{:50}{:10}{:50}'.format('A folder containing genome FASTAs:', '-d', '[folder path (can be relative)]\n'))
         print('Optional arguments:')
-        print('{:50}{:10}{:50}'.format('Read technology preset:', '-p', '[either map-ont (ONT) or map-pb (PacBio)]'))
         print('{:50}{:10}{:50}'.format('Max RAM usage (Gigabytes):', '-m', '[num gigabytes]\n'))
+        print('{:50}{:10}'.format('PacBio read set (ONT is default)', '--map-pb'))
+        print('{:50}{:10}'.format('Rebuild database', '--rebuild'))
         
-
 
 
 
