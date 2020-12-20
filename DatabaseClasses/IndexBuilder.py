@@ -30,7 +30,7 @@ class IndexBuilder:
         folder_extensions = set([f.rsplit('.', 1)[1] for f in filenames])
         folder_fasta_extensions = [ext for ext in folder_extensions if ext in fasta_extensions]
         self.fasta_extensions = folder_fasta_extensions
-
+    
 
     def print_user_message(self):
         print('\n2. creating metagenome')
@@ -46,7 +46,9 @@ class IndexBuilder:
             os.remove(ct.database_path + 'database.fastaaaa')
         
         for ext in self.fasta_extensions:
-            subprocess.call(f"ls {ct.database_path}*.{ext} | xargs cat >> {ct.database_path}database.fastaaaa", shell=True)
+            #subprocess.call(f"ls {ct.database_path}*.{ext} | xargs cat >> {ct.database_path}database.fastaaaa", shell=True)
+            subprocess.call(f"find {ct.database_path} -name '*.{ext}' | xargs cat >> {ct.database_path}database.fastaaaa", shell=True)
+            
             
         print('metagenome created.')        
 

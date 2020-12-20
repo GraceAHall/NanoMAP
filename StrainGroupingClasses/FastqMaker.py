@@ -31,7 +31,7 @@ class FastqMaker:
         self.mode = mode
 
 
-    def make_read_id_dict(self):
+    def make_read_id_dict(self): 
         banlist = set()
         read_id_dict = {}
         for group in self.strain_groups:

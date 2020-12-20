@@ -2,14 +2,13 @@
 from modules.utils import load_banlist
 import os
 
-
+ 
 class ReferenceMaker:
     def __init__(self, strain_groups, context):
         self.strain_groups = strain_groups
         self.project_path = context.project_path
         self.database_path = context.database_path
         self.banlist = load_banlist(self.project_path + '/banlist.txt')
-        self.min_strain_basecount = 1 * 100000
 
 
     def make(self):
@@ -22,8 +21,7 @@ class ReferenceMaker:
     def get_relevant_genome_files(self, group):
         relevant_filenames = []
         for filename, basecount in group.strain_basecounts.items():
-            if basecount > self.min_strain_basecount:
-                relevant_filenames.append(filename)
+            relevant_filenames.append(filename)
 
         relevant_filenames = [x for x in relevant_filenames if x not in self.banlist]
         relevant_filenames = [self.database_path + filename for filename in relevant_filenames]
