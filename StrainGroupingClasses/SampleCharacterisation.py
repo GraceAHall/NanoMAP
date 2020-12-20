@@ -28,7 +28,7 @@ class SampleCharacteriser:
         for read_id, alignments in reads_alignments.items():
             sc.update_characterisation(read_id, alignments)
         self.characterisation = sc
-        # TODO I AM HERE CUZ
+        # TODO I AM HERE 
      
         
 

@@ -37,6 +37,9 @@ def plot_fastq_read_lengths(fastq_filename):
 
 
 def get_best_alignment(lines):
+    if len(lines) == 0:
+        return []
+        
     best_alignments = []
     best = lines[0].split('\t')
     best[1] = int(best[1])

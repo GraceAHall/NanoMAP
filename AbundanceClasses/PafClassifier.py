@@ -67,6 +67,9 @@ class PafClassifier:
 
     @staticmethod
     def get_good_blocks(alignments):
+        if len(alignments) == 0:
+            return alignments
+
         read_length = alignments[0][1]
         max_block = 1.1 * read_length + 50   # - constant for adaptor size?
         min_block = 0.9 * read_length - 50   # + constant for adaptor size?
@@ -75,6 +78,9 @@ class PafClassifier:
 
     @staticmethod
     def filter_low_pid(alignments):
+        if len(alignments) == 0:
+            return alignments
+
         min_identity = 0.85
         return [al for al in alignments if al[2] / al[3] > min_identity]
 
@@ -82,7 +88,8 @@ class PafClassifier:
     @staticmethod
     def get_best_base_matches(alignments):
         if len(alignments) == 0:
-            return []
+            return alignments
+
         alignments.sort(key=lambda x: x[2], reverse=True)  # sort by base matches
         highest_num_matches = alignments[0][2]
         return [x for x in alignments if x[2] == highest_num_matches]
@@ -91,7 +98,7 @@ class PafClassifier:
     @staticmethod
     def format_to_final_alignments(alignments, read_id):
         if len(alignments) == 0:
-            return []
+            return alignments
         
         classifications = set()
         for al in alignments:
@@ -164,6 +171,11 @@ class PafClassifier:
     def set_classification_combinations(self):
         symbols = list(self.symbol_mappings.values())
 
+        # check non-empty list
+        if len(symbols) == 0:
+            self.combinations = []
+            return
+
         classification_combinations = []
         for i in range(1, len(symbols) + 1):
             combinations = list(itertools.combinations(symbols, i))
@@ -183,11 +195,14 @@ class PafClassifier:
 
     def create_pooled_summary(self):
         pooled_summary = {}
+
         for item in self.combinations:
             pooled_summary[item] = 0
+
         for organism, summary in self.organisms_summary_dict.items():
             for classification, count in summary.items():
                 pooled_summary[classification] += count
+
         self.pooled_summary_dict = pooled_summary   
 
     

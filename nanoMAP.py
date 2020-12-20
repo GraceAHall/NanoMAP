@@ -5,7 +5,7 @@ from GeneralClasses.FileSetup import FileSetup
 from GeneralClasses.Minimap2Runner import Minimap2Runner
 from StrainGroupingClasses.StrainGrouping import StrainGrouper
 from GroupClasses.GroupAnalysis import GroupAnalyser
-from CompositionClasses.CompositionAnalysis import CompositionAnalyser
+#from CompositionClasses.CompositionAnalysis import CompositionAnalyser
 #from GeneralClasses.Reporter import Reporter
 
 import sys
@@ -74,7 +74,10 @@ def identify_sample_strains(strain_groups, context):
     write_group_header_to_report(context)
     identified_strains = []
     for group in strain_groups:
-        identified_strains += characterise_group(group, context)
+        strain_abundance_estimates = characterise_group(group, context)
+        strain_abundance_estimates.sort(key=lambda x: x.sample_abundance, reverse=True)
+        if strain_abundance_estimates[0].sample_abundance > 0:
+            identified_strains += strain_abundance_estimates
 
     return identified_strains
 

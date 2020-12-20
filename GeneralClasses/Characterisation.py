@@ -17,6 +17,9 @@ class SampleCharacterisation:
 
 
     def update_characterisation(self, read_id, alignments):
+        if len(alignments) == 0:
+            return
+
         af_dict = self.af_dict
         an_dict = self.an_dict
         read_length = alignments[0][1]
@@ -41,7 +44,7 @@ class SampleCharacterisation:
             strains[filename].sequences[accession].alignments.append(al)
 
         filename_classifications = list(filename_classifications)
-        num_classifications = len(filename_classifications)
+        num_classifications = len(filename_classifications) 
         if filename_classifications[0] not in self.multimapping_dict:
             self.multimapping_dict[filename_classifications[0]] = defaultdict(int) 
 

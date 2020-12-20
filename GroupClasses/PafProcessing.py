@@ -34,24 +34,24 @@ class PafProcessor:
     def load_alignments(self):
         with open(self.paf_file, 'r') as fp:
             lines = fp.readlines()
-            lines = [ln.split('\t') for ln in lines]
-            lines = [ln for ln in lines if len(ln) > 1]
 
         alignments = []
         for line in lines:
-            read_id = line[0]
-            target = line[5]
-            read_length = int(line[1])
-            query_len = int(line[3]) - int(line[2])
-            target_len = int(line[8]) - int(line[7])
-            collinearity = 1 - abs((query_len - target_len) / query_len)
-            pid = int(line[9]) / int(line[10])
-            block = int(line[9])
-            base_matches = int(line[9])
-            mapq = int(line[11])
-            start_offset = int(line[7])
-            end_offset = int(line[6]) - int(line[8])
-            alignments.append([read_id, target, collinearity, pid, block, read_length, base_matches, mapq, start_offset, end_offset])
+            line = line.split('\t')
+            if len(line) > 1:
+                read_id = line[0]
+                target = line[5]
+                read_length = int(line[1])
+                query_len = int(line[3]) - int(line[2])
+                target_len = int(line[8]) - int(line[7])
+                collinearity = 1 - abs((query_len - target_len) / query_len)
+                pid = int(line[9]) / int(line[10])
+                block = int(line[9])
+                base_matches = int(line[9])
+                mapq = int(line[11])
+                start_offset = int(line[7])
+                end_offset = int(line[6]) - int(line[8])
+                alignments.append([read_id, target, collinearity, pid, block, read_length, base_matches, mapq, start_offset, end_offset])
 
         avg_collinearity = sum([al[2] for al in alignments]) / len(alignments)
         avg_pid = sum([al[3] for al in alignments]) / len(alignments)
@@ -192,7 +192,7 @@ class PafProcessor:
 
     def pick_best_alignments(self, reads_alignments):
         for read_id, alignments in reads_alignments.items():
-            if len(alignments) != 0:
+            if len(alignments) > 0:
                 read_length = alignments[0][5]
                 highest_mapq = max([x[7] for x in alignments])
                 best_mapqs = [x for x in alignments if x[7] == highest_mapq]

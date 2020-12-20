@@ -33,7 +33,7 @@ class PafProcessor:
         alignments = []
         with open(self.paf_file, 'r') as fp:
             line = fp.readline().split('\t')
-            while line and len(line) > 5:
+            while line and len(line) > 1:
                 read_id = line[0]
                 target = line[5]
                 read_length = int(line[1])

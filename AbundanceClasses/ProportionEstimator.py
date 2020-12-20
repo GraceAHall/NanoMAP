@@ -27,8 +27,10 @@ class ProportionEstimator:
     def estimate(self):
         if len(self.present_strains) > 1:
             self.perform_alignment_based_estimation()
-        else:
+        elif len(self.present_strains) == 1:
             self.set_simple_abundance()
+        else:
+            print('No strains detected above abundance threshold in group. Continuing for other groups')
         return self.present_strains
 
 

@@ -59,12 +59,14 @@ class Strain:
 
     def get_primary_name(self):
         chromosomal_sequences = self.get_chromosome_sequences()
-        chromosome_names = [x.name for x in chromosomal_sequences]
-        chromosome_names.sort()
-        primary_name = chromosome_names[0]
-        primary_name = primary_name.rsplit('chromosome', 1)[0]
-        primary_name = primary_name.rsplit(', complete', 1)[0]
-        return primary_name
+        if len(chromosomal_sequences) > 0:
+            chromosome_names = [x.name for x in chromosomal_sequences]
+            chromosome_names.sort()
+            primary_name = chromosome_names[0]
+            primary_name = primary_name.rsplit('chromosome', 1)[0]
+            primary_name = primary_name.rsplit(', complete', 1)[0]
+            return primary_name
+        return f'Unknown ({self.filename})'
 
 
     def get_chromosome_read_ids(self):

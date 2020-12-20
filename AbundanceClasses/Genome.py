@@ -35,6 +35,9 @@ class Genome:
 
     
     def get_longest_sequence(self):
+        if len(self.sequences) == 0:
+            return ''
+
         self.sequences.sort(key=lambda x: x.length, reverse=True)
         return self.sequences[0]
             
