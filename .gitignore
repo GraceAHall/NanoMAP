@@ -3,4 +3,4 @@ projects/
 __pycache__/
 *.py[cod]
 *.tsv
- 
+test_inputs.sh 

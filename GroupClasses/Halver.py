@@ -5,62 +5,61 @@ import math
 
 class Halver:
     def __init__(self, characterisation, context):
-        self.characterisation = characterisation
+        self.old_characterisation = characterisation
+        self.new_characterisation = []
+        self.strains_to_delete = []
+
+        # amount DNA attributed to strain needed for strain consideration
         self.min_abundance = 0.05 * (100 / characterisation[0].group_abundance) 
-        #print(self.min_abundance)
+
+        # number of strains to keep after selection process
+        self.quota = math.ceil(0.5 * len(characterisation))
+        
 
 
     def halve(self):
-        # top 75 % mapq1 
-        # top 66 % collinearity
-        characterisation = self.characterisation
+        print(f'\nselecting {self.quota} strains\n')
+        self.remove_low_abundance_strains()
 
-        #print(self.min_abundance)
+        for score in [60, 10, 2]:
+            if self.has_reached_quota():
+                return self.new_characterisation
+            self.add_strains_by_mapq_score(score)
+            self.delete_strains_from_old_characterisation()
+            
+        return self.new_characterisation
+            
 
-        strain_quota = math.ceil(0.5 * len(characterisation))
-        remaining_strains = math.ceil(0.5 * len(characterisation))
-        characterisation = [strain for strain in characterisation if strain.naive_abundance > self.min_abundance]
+    def remove_low_abundance_strains(self):
+        self.old_characterisation = [s for s in self.old_characterisation if s.naive_abundance > self.min_abundance]
 
-        if len(characterisation) < strain_quota:
-            return characterisation
 
-        # iteratively place strains in new_characterisation
-        new_characterisation = []
-        
-        print(f'\nselecting {strain_quota} strains\n')
-        # put top things 
-        characterisation.sort(key=lambda x: x.mapq_dict[60], reverse=True)
-        for i in range(min(2, remaining_strains)):
-            strains_to_delete = []
+    def has_reached_quota(self):
+        if len(self.new_characterisation) >= self.quota:
+            return True
+        return False
 
-            if characterisation[i].mapq_dict[60] > 2:
-                new_characterisation.append(characterisation[i])
-                strains_to_delete.append(i)
 
-            for i in reversed(strains_to_delete):
-                del characterisation[i]
+    def add_strains_by_mapq_score(self, score):
+        self.old_characterisation.sort(key=lambda x: x.mapq_dict[60], reverse=True)
 
-        remaining_strains = strain_quota - len(new_characterisation)
+        i = 0
+        while len(self.new_characterisation) < self.quota and i < len(self.old_characterisation):
+            strain = self.old_characterisation[i]
+            if strain.mapq_dict[score] > 2:
+                self.new_characterisation.append(strain)
+                self.strains_to_delete.append(i)
+            i += 1
 
-        if len(new_characterisation) >= strain_quota:
-            return new_characterisation
 
-        characterisation.sort(key=lambda x: x.mapq_dict[10], reverse=True)
-        for i in range(min(2, remaining_strains)):
-            strains_to_delete = []
-            if characterisation[i].mapq_dict[10] > 2:
-                new_characterisation.append(characterisation[i])
-                strains_to_delete.append(i)
-            for i in reversed(strains_to_delete):
-                del characterisation[i]
+    def delete_strains_from_old_characterisation(self):
+        for i in reversed(self.strains_to_delete):
+            del self.old_characterisation[i] 
+        self.strains_to_delete = []
 
-        remaining_strains = strain_quota - len(new_characterisation)
-        
-        if len(new_characterisation) >= strain_quota:
-            return new_characterisation
 
-        characterisation.sort(key=lambda x: x.mapq_dict[2], reverse=True)
-        new_characterisation += characterisation[:remaining_strains]
-
-        return new_characterisation
     
+  
+    
+    
+

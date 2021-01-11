@@ -16,6 +16,7 @@ import subprocess
 
 class GroupAnalyser:
     def __init__(self, group, context):
+        self.identified_strains = []
         self.group = group
         self.context = context
         self.include_plasmids_mitochondria = context.include_plasmids_mitochondria
@@ -36,6 +37,8 @@ class GroupAnalyser:
        
         while not self.resolved:
             self.halve_candidates()
+            if len(self.characterisation) == 0:
+                return self.identified_strains
             self.update_database()
             self.perform_alignment()
             self.process_paf()
@@ -64,6 +67,8 @@ class GroupAnalyser:
     def process_paf(self):
         pp = PafProcessor(self.paf, self.context.database_path, self.include_plasmids_mitochondria)
         self.alignments, self.collinearities = pp.process()
+        if len(self.alignments) == 0:
+            self.resolved = True
 
 
     def create_characterisation(self):

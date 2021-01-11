@@ -46,9 +46,8 @@ class IndexBuilder:
             os.remove(ct.database_path + 'database.fastaaaa')
         
         for ext in self.fasta_extensions:
-            #subprocess.call(f"ls {ct.database_path}*.{ext} | xargs cat >> {ct.database_path}database.fastaaaa", shell=True)
+            # Author of this line: jagos01 (https://github.com/jagos01) #
             subprocess.call(f"find {ct.database_path} -name '*.{ext}' | xargs cat >> {ct.database_path}database.fastaaaa", shell=True)
-            
             
         print('metagenome created.')        
 

@@ -6,7 +6,7 @@
 
 
 class CompletionJudge:
-    def __init__(self, characterisation):
+    def __init__(self, characterisation): 
         self.characterisation = characterisation
         self.min_num_strains = 4
         self.min_cumulative_mapq_60 = 1000

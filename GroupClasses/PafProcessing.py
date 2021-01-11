@@ -18,6 +18,10 @@ class PafProcessor:
     def process(self):
         # [read_id, target, collinearity, pid, block, read_length, base_matches, MAPQ, start_offset, end_offset]
         alignments = self.load_alignments()
+        if len(alignments) == 0:
+            return [], defaultdict(list)
+
+        self.set_thresholds(alignments)
         collinearities = self.get_collinearities(alignments)
         reads_alignments = self.group_by_read_id(alignments)
         reads_alignments = self.remove_origin_mapping_reads(reads_alignments)
@@ -53,6 +57,10 @@ class PafProcessor:
                 end_offset = int(line[6]) - int(line[8])
                 alignments.append([read_id, target, collinearity, pid, block, read_length, base_matches, mapq, start_offset, end_offset])
 
+        return alignments
+
+
+    def set_thresholds(self, alignments):
         avg_collinearity = sum([al[2] for al in alignments]) / len(alignments)
         avg_pid = sum([al[3] for al in alignments]) / len(alignments)
 
@@ -62,9 +70,6 @@ class PafProcessor:
         self.min_collinearity = avg_collinearity - 1 * std_dev_collinearity
         self.min_pid = avg_pid - 1 * std_dev_pid
 
-        #print('min collinearity', self.min_collinearity)
-        #print('min pid', self.min_pid)
-        del lines
         return alignments
 
 

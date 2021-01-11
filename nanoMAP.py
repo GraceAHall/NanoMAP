@@ -76,7 +76,7 @@ def identify_sample_strains(strain_groups, context):
     for group in strain_groups:
         strain_abundance_estimates = characterise_group(group, context)
         strain_abundance_estimates.sort(key=lambda x: x.sample_abundance, reverse=True)
-        if strain_abundance_estimates[0].sample_abundance > 0:
+        if len(strain_abundance_estimates) > 0 and strain_abundance_estimates[0].sample_abundance > 0:
             identified_strains += strain_abundance_estimates
 
     return identified_strains
