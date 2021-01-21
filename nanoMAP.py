@@ -67,7 +67,7 @@ def group_strains(context):
     grouping_context = StrainGroupingContext([context.project_path, context.database_path, context.fastq_path])
     sg = StrainGrouper(grouping_context)
     return sg.group()
-            
+
 
 def identify_sample_strains(strain_groups, context):
     print('\n\n=========== Identifying Strains ===========')

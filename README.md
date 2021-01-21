@@ -19,6 +19,24 @@ python build_database.py -d database
 python nanomap.py -r fastq/fasta -d database -p projectname
 ```
 
+<br>
+
+## Test Datasets
+Reads:
+
+[ZymoBIOMICS Microbial Community Standard (Sample)](https://www.dropbox.com/s/5vdeh1i04zamm3c/ZYMO_readset_sample.fastq.gz?dl=0)
+
+<br>
+
+Reference Genomes for database building:
+
+[ZymoBIOMICS reference genomes (needed if using test read set)](https://s3.amazonaws.com/zymo-files/BioPool/ZymoBIOMICS.STD.refseq.v2.zip)
+
+[RefSeq Complete bacteria, fungi, viruses + latest human reference](https://www.ncbi.nlm.nih.gov/assembly?term=%28%22Bacteria%22%5BOrganism%5D%20OR%20%22Fungi%22%5BOrganism%5D%20OR%20%22Viruses%22%5BOrganism%5D%29%20AND%20%22latest%20refseq%22%5Bfilter%5D%20AND%20%22complete%20genome%22%5Bfilter%5D%20NOT%20anomalous%5Bfilter%5D%20OR%20%28%22Homo%20sapiens%22%5BOrganism%5D%20AND%20%22reference%20genome%22%5Bfilter%5D%29&cmd=DetailsSearch)
+
+[RefSeq Complete bacteria, fungi + latest human reference](https://www.ncbi.nlm.nih.gov/assembly?term=%28%22Bacteria%22%5BOrganism%5D%20OR%20%22Fungi%22%5BOrganism%5D%29%20AND%20%22latest%20refseq%22%5Bfilter%5D%20AND%20%22complete%20genome%22%5Bfilter%5D%20NOT%20anomalous%5Bfilter%5D%20OR%20%28%22Homo%20sapiens%22%5BOrganism%5D%20AND%20%22reference%20genome%22%5Bfilter%5D%29&cmd=DetailsSearch)
+
+<br>
 
 
 ## Table of Contents
