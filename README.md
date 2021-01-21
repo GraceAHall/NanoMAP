@@ -33,7 +33,7 @@ python nanomap.py -r fastq/fasta -d [your_database_path] -p [your_project_name]
 <br>
 Expected output:
 
-<img src="https://github.com/GraceAHall/NanoMAP/blob/master/media/expectedOutput.PNG" width="300" height="120" />
+<img src="https://github.com/GraceAHall/NanoMAP/blob/master/media/expectedOutput.PNG" width="500" height="160" />
 
 *Runtime for the ZymoBIOMICS reads and database above: approximately 2-5 mins using 4 cores.*
 
