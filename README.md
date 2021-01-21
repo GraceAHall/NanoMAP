@@ -5,30 +5,40 @@
 # NanoMAP
 
 
-## Quickstart
-Please read about building databases prior to use. 
+## Quickstart / Installation
+***Please read about building databases prior to use!***
 ```sh
 # Obtain NanoMAP
 git clone https://github.com/GraceAHall/NanoMAP
 cd NanoMAP
 
 # Build database
-python build_database.py -d database
+python build_database.py -d [your_database_path]
 
 # Run
-python nanomap.py -r fastq/fasta -d database -p projectname
+python nanomap.py -r fastq/fasta -d [your_database_path] -p [your_project_name]
 ```
 
 <br>
 
 ## Test Datasets
-Reads:
+**Reads:**
 
-[ZymoBIOMICS Microbial Community Standard (Sample)](https://www.dropbox.com/s/5vdeh1i04zamm3c/ZYMO_readset_sample.fastq.gz?dl=0)
+[ZymoBIOMICS Microbial Community Standard (200 Mb sample)](https://www.dropbox.com/s/5vdeh1i04zamm3c/ZYMO_readset_sample.fastq.gz?dl=0)
+
+**Database:**
+
+[ZymoBIOMICS test database](https://www.dropbox.com/sh/azaruiigagtal68/AACwXw2denwK4YWAg7uqQFuVa?dl=0) (21 strains per species in sample, 172 reference genomes)
+
+<br>
+Expected output:
+![alt text]()
+
+*Runtime for the ZymoBIOMICS reads and database above: approximately 2-5 mins using 4 cores.*
 
 <br>
 
-Reference Genomes for database building:
+**Further reference genomes for database building:**
 
 [ZymoBIOMICS reference genomes (needed if using test read set)](https://s3.amazonaws.com/zymo-files/BioPool/ZymoBIOMICS.STD.refseq.v2.zip)
 
@@ -36,8 +46,9 @@ Reference Genomes for database building:
 
 [RefSeq Complete bacteria, fungi + latest human reference](https://www.ncbi.nlm.nih.gov/assembly?term=%28%22Bacteria%22%5BOrganism%5D%20OR%20%22Fungi%22%5BOrganism%5D%29%20AND%20%22latest%20refseq%22%5Bfilter%5D%20AND%20%22complete%20genome%22%5Bfilter%5D%20NOT%20anomalous%5Bfilter%5D%20OR%20%28%22Homo%20sapiens%22%5BOrganism%5D%20AND%20%22reference%20genome%22%5Bfilter%5D%29&cmd=DetailsSearch)
 
-<br>
 
+
+<br>
 
 ## Table of Contents
 - [Requirements](#requirements)
@@ -51,9 +62,11 @@ Reference Genomes for database building:
 
 <br>
 
-## <a name="requirements"></a>Requirements
+## <a name="requirements"></a>System Requirements
 NanoMAP uses read alignment for sample characterisation. <br>
-Python pulls the strings, while minimap2 does most of the actual work. The following are required. 
+minimap2 is used for alignment, then NanoMAP processes the output file.
+
+The following are required. 
 - minimap2
 - python 3.6 or greater
 - python packages:
@@ -226,8 +239,10 @@ Naive abundance is a very rough estimate of abundance within a strain group.
 The MAPQ read counts record the number of reads which map uniquely to that strain's reference genome.<br> MAPQ scores are the basis for identifying strains, and will have informed NanoMAP's decisions.  <br>
 In our experience, a human can often interpret the console information and **projectname_detailed_report.tsv** better than NanoMAP.  
 
+<br>
 
+## Licence
 
-
+This project is covered under the MIT licence. You are free to use, copy, modify or distribute this software. 
 
 
