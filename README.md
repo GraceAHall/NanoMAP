@@ -138,7 +138,7 @@ The build process will extract some information from FASTA headers, concatenate 
 NanoMAP allows flexibility with databases. Any genome assembly can be used, with the following **database conditions:**
 
 - FASTA headers contain strain name
-- Each genome is a **seperate file**
+- Each genome is a **separate file**
 - Genomes are good quality
 
 The FASTA headers should be human readable as these appear in the program output. As an example:
@@ -147,7 +147,7 @@ The FASTA headers should be human readable as these appear in the program output
 ```
 Will appear as 'Shigella flexneri 2a str. 301' in the NanoMAP output. The header text before the first space (RefSeq accession in this case) is ignored. 
 
-Genomes must be seperate files, as filenames are used to uniquely identify each reference genome in the folder. 
+Genomes must be separate files, as filenames are used to uniquely identify each reference genome in the folder. 
 
 Poor quality reference genomes should be avoided as can degrade performance.  
 
